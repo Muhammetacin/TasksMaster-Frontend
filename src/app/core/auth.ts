@@ -14,10 +14,16 @@ export class AuthService {
 
   // --- Token Beheer ---
   public getToken(): string | null {
+    if (typeof localStorage === 'undefined') {
+      return null; // Server-side rendering, no localStorage
+    }
     return localStorage.getItem(this.TOKEN_KEY);
   }
 
   private saveToken(token: string): void {
+    if (typeof localStorage === 'undefined') {
+      return; // Server-side rendering, can't save token
+    }
     localStorage.setItem(this.TOKEN_KEY, token);
   }
 
@@ -27,6 +33,9 @@ export class AuthService {
   }
 
   public logout(): void {
+    if (typeof localStorage === 'undefined') {
+      return; // Server-side rendering
+    }
     localStorage.removeItem(this.TOKEN_KEY);
     // TODO: Navigeren naar de login pagina
   }

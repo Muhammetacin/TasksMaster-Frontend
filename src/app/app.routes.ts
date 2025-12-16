@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
-import { inject } from '@angular/core';
 
 export const routes: Routes = [
     // Publieke routes
@@ -10,7 +9,7 @@ export const routes: Routes = [
     // Beveiligde routes (met functionele Guard)
     { 
         path: 'tasks', 
-        canActivate: [() => inject(authGuard)()], // Moderne functionele guard syntax
+        canActivate: [authGuard],
         loadComponent: () => import('./tasks/task-list/task-list').then(m => m.TaskListComponent) 
     },
 
