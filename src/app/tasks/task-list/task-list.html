@@ -2,6 +2,13 @@
 
 <p>task-list works!</p>
 
+<div class="add-task-form">
+  <h3>Nieuwe Taak Toevoegen</h3>
+  <input type="text" [(ngModel)]="newTask.title" placeholder="Titel van de taak">
+  <input type="text" [(ngModel)]="newTask.description" placeholder="Beschrijving">
+  <button (click) = "addTask()" [disabled]="!newTask.title">Toevoegen</button>
+</div>
+
 <div class="container">
   <h2>Mijn Taken</h2>
 
