@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { LoginRequest, LoginResponse } from './models/auth.models';
 import { Observable, tap, catchError, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -15,9 +16,12 @@ export class AuthService {
   // --- Token Beheer ---
   public getToken(): string | null {
     if (typeof localStorage === 'undefined') {
+      console.log('getToken() - localStorage is undefined (SSR)');
       return null; // Server-side rendering, no localStorage
     }
-    return localStorage.getItem(this.TOKEN_KEY);
+    const token = localStorage.getItem(this.TOKEN_KEY);
+    console.log('getToken() - localStorage value:', token);
+    return token;
   }
 
   private saveToken(token: string): void {
@@ -29,6 +33,7 @@ export class AuthService {
 
   public isLoggedIn(): boolean {
     // Controleren of de token bestaat
+    console.log('AuthService.isLoggedIn() called. Token:', this.getToken());
     return !!this.getToken();
   }
 
@@ -38,17 +43,16 @@ export class AuthService {
     }
     localStorage.removeItem(this.TOKEN_KEY);
     // TODO: Navigeren naar de login pagina
+    const router = inject(Router);
+    router.navigate(['/login']);
   }
 
 
   // --- API Interactie ---
   public login(request: LoginRequest): Observable<LoginResponse> {
-    console.log('AuthService.login() called with:', request);
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, request).pipe(
       tap(response => {
-        console.log('Login response:', response);
         if (response.token) {
-          console.log('Saving token to localStorage:', response.token);
           this.saveToken(response.token);
         }
       }),

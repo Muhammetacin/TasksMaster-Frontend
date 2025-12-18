@@ -1,10 +1,19 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
+import { noAuthGuard } from './core/guards/no-auth.guard';
 
 export const routes: Routes = [
     // Publieke routes
-    { path: 'login', loadComponent: () => import('./auth/login/login').then(m => m.LoginComponent) },
-    { path: 'register', loadComponent: () => import('./auth/register/register').then(m => m.RegisterComponent) },
+    { 
+        path: 'login', 
+        canActivate: [noAuthGuard], 
+        loadComponent: () => import('./auth/login/login').then(m => m.LoginComponent) 
+    },
+    { 
+        path: 'register', 
+        canActivate: [noAuthGuard],
+        loadComponent: () => import('./auth/register/register').then(m => m.RegisterComponent) 
+    },
 
     // Beveiligde routes (met functionele Guard)
     { 
@@ -13,7 +22,7 @@ export const routes: Routes = [
         loadComponent: () => import('./tasks/task-list/task-list').then(m => m.TaskListComponent) 
     },
 
-    // Standaard routering
+    // Standaard routering - redirect to tasks
     { path: '', redirectTo: 'tasks', pathMatch: 'full' },
-    { path: '**', redirectTo: 'tasks' }
+    { path: '**', redirectTo: 'login' }
 ];
