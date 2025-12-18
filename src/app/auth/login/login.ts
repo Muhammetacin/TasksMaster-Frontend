@@ -61,4 +61,8 @@ export class LoginComponent {
       const control = this.exampleForm.get(controlName);
       return control?.invalid && (control.touched || this.formSubmitted);
   }
+
+  isLoggedIn(): void {
+    console.log('Login status:', this.authService.isLoggedIn() ? 'Logged In' : 'Not Logged In');
+  }
 }

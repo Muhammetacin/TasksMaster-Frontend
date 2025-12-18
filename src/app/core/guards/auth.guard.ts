@@ -19,8 +19,8 @@ export const authGuard: CanActivateFn = (route, state) => {
   const token = authService.getToken();
   const isLoggedIn = authService.isLoggedIn();
   
-  console.log('AuthGuard - Token:', token);
-  console.log('AuthGuard - isLoggedIn:', isLoggedIn);
+  // console.log('AuthGuard - Token:', token);
+  // console.log('AuthGuard - isLoggedIn:', isLoggedIn);
 
   if (isLoggedIn) {
     console.log('AuthGuard - Access GRANTED to:', state.url);

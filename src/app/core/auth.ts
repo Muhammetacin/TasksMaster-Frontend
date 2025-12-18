@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private http = inject(HttpClient);
+  private router = inject(Router);
   // Pas de URL aan naar jouw backend API endpoint
   private apiUrl = 'https://localhost:7237/Auth';
   private readonly TOKEN_KEY = 'auth_token';
@@ -20,7 +21,7 @@ export class AuthService {
       return null; // Server-side rendering, no localStorage
     }
     const token = localStorage.getItem(this.TOKEN_KEY);
-    console.log('getToken() - localStorage value:', token);
+    // console.log('getToken() - localStorage value:', token);
     return token;
   }
 
@@ -33,7 +34,7 @@ export class AuthService {
 
   public isLoggedIn(): boolean {
     // Controleren of de token bestaat
-    console.log('AuthService.isLoggedIn() called. Token:', this.getToken());
+    // console.log('AuthService.isLoggedIn() called. Token:', this.getToken());
     return !!this.getToken();
   }
 
@@ -42,9 +43,8 @@ export class AuthService {
       return; // Server-side rendering
     }
     localStorage.removeItem(this.TOKEN_KEY);
-    // TODO: Navigeren naar de login pagina
-    const router = inject(Router);
-    router.navigate(['/login']);
+    // Navigeren naar de login pagina
+    this.router.navigate(['/login']);
   }
 
 
