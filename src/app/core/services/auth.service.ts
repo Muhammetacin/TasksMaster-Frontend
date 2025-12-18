@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { LoginRequest, LoginResponse } from './models/auth.models';
+import { LoginRequest, LoginResponse } from '../models/auth.models';
 import { Observable, tap, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { API_CONFIG } from '../config/api.config';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +11,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  // Pas de URL aan naar jouw backend API endpoint
-  private apiUrl = 'https://localhost:7237/Auth';
+  private apiUrl = `${API_CONFIG.baseUrl}${API_CONFIG.auth.login}`;
   private readonly TOKEN_KEY = 'auth_token';
 
   // --- Token Beheer ---
@@ -50,7 +50,7 @@ export class AuthService {
 
   // --- API Interactie ---
   public login(request: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, request).pipe(
+    return this.http.post<LoginResponse>(this.apiUrl, request).pipe(
       tap(response => {
         if (response.token) {
           this.saveToken(response.token);

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Button } from "primeng/button";
-import { AuthService } from '../../core/auth';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-task-list',

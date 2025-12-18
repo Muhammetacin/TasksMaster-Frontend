@@ -5,7 +5,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../core/auth';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',

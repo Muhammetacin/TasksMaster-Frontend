@@ -3,16 +3,23 @@ import { provideRouter } from '@angular/router';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { routes } from './app.routes';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes), 
-    provideHttpClient(withFetch()),
+    provideHttpClient(
+      withFetch(), 
+      withInterceptors([authInterceptor])
+    ),
     providePrimeNG({
       theme: {
-          preset: Aura
+          preset: Aura,
+          options: {
+            darkModeSelector: false || 'none'
+        }
       }
     }),
   ]
