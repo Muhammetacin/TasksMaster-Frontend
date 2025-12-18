@@ -5,6 +5,6 @@ export const API_CONFIG = {
     logout: '/Auth/logout',
   },
   tasks: {
-    base: '/api/Tasks',
+    base: '/Task',
   },
 };

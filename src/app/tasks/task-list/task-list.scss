@@ -1,0 +1,22 @@
+/* src/app/tasks/task-list/task-list.component.scss */
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  align-items: center;
+
+  .completed {
+    text-decoration: line-through;
+    color: gray;
+  }
+}
+
+.btn-delete {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
