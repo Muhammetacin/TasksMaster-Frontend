@@ -24,7 +24,7 @@ export class TaskListComponent {
 
   private taskService = inject(TaskService);
   
-  tasks: TaskItem[] = [];
+  tasks$ = this.taskService.tasks$;
   loading$ = new BehaviorSubject<boolean>(true);
 
   ngOnInit(): void {
@@ -33,8 +33,7 @@ export class TaskListComponent {
 
   loadTasks(): void {
     this.taskService.getTasks().subscribe({
-      next: (data) => {
-        this.tasks = data;
+      next: () => {
         this.loading$.next(false);
       },
       error: (err) => {
@@ -46,9 +45,8 @@ export class TaskListComponent {
 
   deleteTask(id: string): void {
     if (confirm('Weet je zeker dat je deze taak wilt verwijderen?')) {
-      this.taskService.deleteTask(id).subscribe(() => {
-        // Filter de verwijderde taak lokaal uit de lijst
-        this.tasks = this.tasks.filter(t => t.id !== id);
+      this.taskService.deleteTask(id).subscribe({
+        error: (err) => console.error('Fout bij verwijderen taak', err)
       });
     }
   }
