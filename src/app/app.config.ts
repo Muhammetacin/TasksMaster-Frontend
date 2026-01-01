@@ -13,6 +13,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withFetch(), 
       withInterceptors([authInterceptor])
+      // withInterceptors([authInterceptor, errorInterceptor])
     ),
     providePrimeNG({
       theme: {
@@ -20,7 +21,8 @@ export const appConfig: ApplicationConfig = {
           options: {
             darkModeSelector: false || 'none'
         }
-      }
+      },
+      ripple: true
     }),
   ]
 };
