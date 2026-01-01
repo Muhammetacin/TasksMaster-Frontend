@@ -21,6 +21,10 @@ export const routes: Routes = [
         canActivate: [authGuard],
         loadComponent: () => import('./tasks/task-list/task-list').then(m => m.TaskListComponent) 
     },
+    { 
+        path: 'error-logs', 
+        loadComponent: () => import('./error-logs/error-log/error-log').then(m => m.ErrorLogComponent) 
+    },
 
     // Standaard routering - redirect to tasks
     { path: '', redirectTo: 'tasks', pathMatch: 'full' },
